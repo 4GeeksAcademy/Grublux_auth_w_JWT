@@ -36,18 +36,24 @@ export const Landing = () => {
                     return res.json();
                 })
                 .then(responseAsJson => {
-                    console.log('Response:', responseAsJson)
-                    const token = responseAsJson.token
-                    const usersEmail = responseAsJson.email
-                    const usersId = responseAsJson.id
-                    sessionStorage.setItem("jwt-token", token)
-                    console.log(sessionStorage.getItem("jwt-token"))
-                    setUser({
-                        "id": usersId,
-                        "email": usersEmail
-                    });
-                    console.log(responseAsJson.msg)
-                }).then(
+                    if (responseAsJson.msg == "successfully authenticated") {
+                        console.log('Response:', responseAsJson)
+                        const token = responseAsJson.token
+                        const usersEmail = responseAsJson.email
+                        const usersId = responseAsJson.id
+                        sessionStorage.setItem("jwt-token", token)
+                        console.log(sessionStorage.getItem("jwt-token"))
+                        setUser({
+                            "id": usersId,
+                            "email": usersEmail
+                        })
+                    }
+                    else {
+                        setError(responseAsJson)
+                        console.log(responseAsJson.msg)
+                    }
+                })
+                .then(
                     navigate("/home")
                 )
         }

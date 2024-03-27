@@ -14,9 +14,36 @@ export const Home = () => {
 	console.log("The user token is:")
 	console.log(userToken)
 
+
 	useEffect(() => {
-		// This will run every time the component re-renders
+
 		if (userToken) {
+			// This will run every time the component re-renders
+			fetch('https://improved-waffle-vggqvgw4jwv36qqq-3001.app.github.dev/auth/user', {
+				method: 'GET',
+				headers: {
+					"Content-Type": "application/json",
+					'Authorization': 'Bearer ' + userToken // ⬅⬅⬅ authorization token
+				}
+			})
+				.then(response => {
+					// Read the response as JSON
+					return response.json();
+				})
+				.then(responseAsJson => {
+					if (responseAsJson.msg == "successfully authenticated") {
+						setUser(responseAsJson);
+						console.log(responseAsJson)
+						setError("")
+						return user
+					}
+					else {
+						setError(responseAsJson)
+					}
+					// Do stuff with the JSONified response            
+				})
+
+			// This will run every time the component re-renders
 			fetch('https://improved-waffle-vggqvgw4jwv36qqq-3001.app.github.dev/auth/user', {
 				method: 'GET',
 				headers: {
@@ -42,13 +69,16 @@ export const Home = () => {
 				})
 			// This will run only if some_condition is true
 		}
-	}); // <------ PLEASE NOTICE THE EMPTY ARRAY IS GONE!
+	}, []); // <------ PLEASE NOTICE THE EMPTY ARRAY
+
+
+
 
 
 
 
 	if (user.id) {
-		var splitName = user.username.split("@")
+		var splitName = user.email.split("@")
 		var cleanName = splitName[0]
 	}
 
