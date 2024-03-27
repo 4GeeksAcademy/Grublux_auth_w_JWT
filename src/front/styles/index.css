@@ -1,3 +1,25 @@
 /* 
     General Styles used on every website (Don't Repeat Yourself)
 */
+
+
+.mySignUp {
+    background-color: rgba(144, 144, 144, 0.179);
+    border-radius: 7px;
+}
+
+.mySignUp:hover {
+    cursor: pointer;
+    color: black;
+}
+
+.toLogin {
+    background-color: rgba(144, 144, 144, 0.179);
+    border-radius: 7px;
+}
+
+.toLogin:hover {
+    cursor: pointer;
+    color: black;
+}
+
